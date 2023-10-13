@@ -2,15 +2,15 @@
 <html xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	<head>
 		<meta charset="utf-8"/>
-		<title>Matérias</title>
+		<title>Boletim</title>
 		<!--Import Google Icon Font-->
 	      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 	      <!--Import materialize.css-->
-	      <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css"  media="screen,projection"/>
+	      <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
 	
 	      <!--Let browser know website is optimized for mobile-->
 	      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	      <link rel="stylesheet" href="./style/styleCss.css"/>
+	      <link rel="stylesheet" href="style/styleCss.css"/>
 	</head>
 	<body>
 	
@@ -18,9 +18,9 @@
 		
 			<nav class="menu">
 				<div class="nav-wrapper">
-			    	<a href="./" class="brand-logo">Logo</a>
+			    	<a href="" class="brand-logo">Boletim</a>
 			      	<ul id="nav-mobile" class="right hide-on-med-and-down">
-			        	<li><a href="nova-nota">Nova nota</a></li>
+			        	<li><a th:href="@{notas/nova-nota}">Nova nota</a></li>
 			        	<li><a href="#">Sair</a></li>
 			      	</ul>
 			    </div>
@@ -29,10 +29,14 @@
 		</header>
 		
 		<br>
-				
+						
 		<div>
+			<div class="container form">
+				<h5>Notas</h5>
+			</div>
 		
 			<table class="container">
+		
 				<thead>
 					<tr>
 						<th>Matéria</th>
@@ -43,7 +47,10 @@
 					<tr th:each="nota : ${notas}">
 						<td><span th:text="${nota.materia}"></span></td>
 						<td><span th:text="${nota.nota}"></span></td>											
-						<td><a th:id="${nota.idNota}" class="waves-effect waves-light btn-small" onclick="chamarController(this);"><i class="material-icons left">delete</i></a></td>
+						<td>
+							<a th:id="${nota.idNota}" th:href="@{notas/editar-nota/{id}(id=${nota.idNota})}"  class="waves-effect waves-light btn-small"><i class="material-icons rigth">edit</i></a>						
+							<a th:id="${nota.idNota}" th:href="@{notas/excluir-nota/{id}(id=${nota.idNota})}"  class="waves-effect waves-light btn-small"><i class="material-icons left">delete</i></a>
+						</td>
 					</tr>
 				</tbody>
 				<tfoot>
@@ -54,17 +61,20 @@
 			</table>
 		
 		</div>
+		
+		<th:block th:include="mensagem"></th:block>
 
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	    <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
 	    
-	    <script>
-       		function chamarController(obj) {
-	            var xhttp = new XMLHttpRequest();
-	            xhttp.open("DELETE", "/excluir-nota/" + obj.id, true);
-	            xhttp.send();
-       		}
-    	</script>
+	    
+	    <script type="text/javascript">
+	    	setTimeout(function(){	
+				var a = document.getElementById("mensagem");				
+				a.style="display:none";			
+			}, 3000);
+	    </script>
+	    
 	    	    	    
 	</body>
 

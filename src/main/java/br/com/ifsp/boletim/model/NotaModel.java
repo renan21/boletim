@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,8 +26,11 @@ public class NotaModel {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idNota;
 	
+	@NotEmpty(message = "Matéria não pode estar vazia.")
 	private String materia;
 	
+    @Min(value = 0, message="Nota deve ser maior ou igual 0.")
+    @Max(value = 10, message="Nota deve ser menor ou igual 10.")
 	private int nota;
 
 }

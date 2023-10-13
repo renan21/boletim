@@ -16,3 +16,7 @@ nav .brand-logo {
     left: 0;
     opacity: 100;
 }
+
+.card-content {
+    text-align: center;
+}

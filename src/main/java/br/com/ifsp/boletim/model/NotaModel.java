@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +32,7 @@ public class NotaModel {
 	
     @Min(value = 0, message="Nota deve ser maior ou igual 0.")
     @Max(value = 10, message="Nota deve ser menor ou igual 10.")
+    @NotNull(message = "Nota não pode estar vazia.")
 	private int nota;
 
 }

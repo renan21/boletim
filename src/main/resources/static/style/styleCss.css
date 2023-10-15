@@ -6,6 +6,11 @@ nav .brand-logo {
 	background-color: #3399ff;
 }
 
+.btn, .btn-large {
+    background-color: #3399ff;
+}
+
+
 .input-field select {
     display: block;
     position: relative;
@@ -20,3 +25,10 @@ nav .brand-logo {
 .card-content {
     text-align: center;
 }
+
+
+
+
+
+
+

@@ -20,8 +20,10 @@ public class SecurityConfiguration {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
 	    	.authorizeHttpRequests()
-	    	.anyRequest()
-	    	.authenticated()
+	    	.antMatchers("/boletim/api/*")
+	    	.hasAuthority("ROLE_USER")
+	    	.antMatchers("/boletim/api/delete/*")
+	    	.hasAuthority("ROLE_ADMIN")
 	    	.and()
 	    	.httpBasic()
 	    	.and()

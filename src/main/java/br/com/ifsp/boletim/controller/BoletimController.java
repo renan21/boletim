@@ -38,7 +38,7 @@ public class BoletimController {
 		return boletimService.registraNota(novaNota);
 	}
 	
-	@DeleteMapping("{idNota}")
+	@DeleteMapping("delete/{idNota}")
 	public String excluiNota(@PathVariable long idNota) {
 		boletimService.excluiNota(idNota);
 		return "Nota excluída com sucesso.";

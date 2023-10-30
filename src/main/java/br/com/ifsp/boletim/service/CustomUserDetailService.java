@@ -1,41 +1,72 @@
 package br.com.ifsp.boletim.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
 import br.com.ifsp.boletim.model.UsuarioModel;
 import br.com.ifsp.boletim.repository.UsuarioRepository;
 
 @Service
-public class CustomUserDetailService implements UserDetailsService {
-	
+public class CustomUserDetailService implements UserDetailsManager {
+		
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    	UsuarioModel usuario = Optional
+    								.ofNullable(usuarioRepository.findByLogin(username))
+    								.orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."));
+
+        return User
+        			.withUsername(usuario.getUsuario())
+                	.password("{bcrypt}"+usuario.getSenha())
+                	.roles(usuario.isAdmin() ? "ADMIN" : "USER")
+                	.accountExpired(false)
+                	.accountLocked(false)
+                	.credentialsExpired(false)
+                	.disabled(false)
+                	.build();
+    }
+    
+    //TODO: Implemente os métodos restantes da interface UserDetailsManager, se necessário
+
+    
+	@Override
+	public void createUser(UserDetails user) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UsuarioModel usuario = Optional
-									.ofNullable(usuarioRepository.findByLogin(username))
-									.orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado."));
+	public void updateUser(UserDetails user) {
+		// TODO Auto-generated method stub
 		
-		List<GrantedAuthority> authorityListAdmin = AuthorityUtils.createAuthorityList("ROLE_USER", "ROLE_ADMIN");
-		List<GrantedAuthority> authorityListUser = AuthorityUtils.createAuthorityList("ROLE_USER");
+	}
 
-			
+	@Override
+	public void deleteUser(String username) {
+		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void changePassword(String oldPassword, String newPassword) {
+		// TODO Auto-generated method stub
 		
-		return new User(usuario.getUsuario(),
-						usuario.getSenha(),
-						usuario.isAdmin() ? authorityListAdmin : authorityListUser);
+	}
+
+	@Override
+	public boolean userExists(String username) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
+

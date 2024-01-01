@@ -28,10 +28,10 @@ public class CustomUserDetailService implements UserDetailsManager {
         			.withUsername(usuario.getUsuario())
                 	.password("{bcrypt}"+usuario.getSenha())
                 	.roles(usuario.isAdmin() ? "ADMIN" : "USER")
-                	.accountExpired(false)
-                	.accountLocked(false)
-                	.credentialsExpired(false)
-                	.disabled(false)
+                	.accountExpired(true)
+                	.accountLocked(true)
+                	.credentialsExpired(true)
+                	.disabled(true)
                 	.build();
     }
     
@@ -65,7 +65,7 @@ public class CustomUserDetailService implements UserDetailsManager {
 	@Override
 	public boolean userExists(String username) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 }
